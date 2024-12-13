@@ -84,6 +84,17 @@ export default function(hljs) {
     relevance: 0
   };
 
+  const HEREDOC = {
+    className: 'string',
+    begin: /<<[-~]?'?"?\s*[\w\-]+['"]?\s*$/,
+    end: /^\s*[\w\-]+/
+  };
+
+  const OPERATORS = {
+    className: 'operator',
+    begin: /(?:\|\||\|&?|&|>>|>|<<<?|<|\\\n|\$\()/
+  };
+
   return {
     name: 'Bash',
     aliases: ['sh', 'zsh'],
@@ -120,7 +131,9 @@ export default function(hljs) {
       QUOTE_STRING,
       ESCAPED_QUOTE,
       APOS_STRING,
-      VAR
+      VAR,
+      HEREDOC,
+      OPERATORS
     ]
   };
 }
