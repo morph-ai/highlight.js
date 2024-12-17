@@ -15,8 +15,8 @@ export default function(hljs) {
     end: '</>'
   };
   var XML_TAG = {
-    begin: /<[A-Za-z0-9\\._:-]+/,
-    end: /\/[A-Za-z0-9\\._:-]+>|\/>/
+    begin: /<[A-Za-z0-9\._:-]+/,
+    end: /\/[A-Za-z0-9\._:-]+>|\/>/
   };
   var KEYWORDS = {
     $pattern: ECMAScript.IDENT_RE,
@@ -27,15 +27,15 @@ export default function(hljs) {
   var NUMBER = {
     className: 'number',
     variants: [
-      { begin: '\\b(0[bB][01]+)n?' },
-      { begin: '\\b(0[oO][0-7]+)n?' },
+      { begin: '\b(0[bB][01]+)n?' },
+      { begin: '\b(0[oO][0-7]+)n?' },
       { begin: hljs.C_NUMBER_RE + 'n?' }
     ],
     relevance: 0
   };
   var SUBST = {
     className: 'subst',
-    begin: '\\$\\{', end: '\\}',
+    begin: '\$\{', end: '\}',
     keywords: KEYWORDS,
     contains: []  // defined later
   };
@@ -115,8 +115,8 @@ export default function(hljs) {
       TEMPLATE_STRING,
       hljs.C_LINE_COMMENT_MODE,
       hljs.COMMENT(
-        '/\\*\\*',
-        '\\*/',
+        '/\*\*',
+        '\*/',
         {
           relevance : 0,
           contains : [
@@ -126,13 +126,13 @@ export default function(hljs) {
               contains : [
                 {
                   className: 'type',
-                  begin: '\\{',
-                  end: '\\}',
+                  begin: '\{',
+                  end: '\}',
                   relevance: 0
                 },
                 {
                   className: 'variable',
-                  begin: IDENT_RE + '(?=\\s*(-)|$)',
+                  begin: IDENT_RE + '(?=\s*(-)|$)',
                   endsParent: true,
                   relevance: 0
                 },
@@ -165,18 +165,18 @@ export default function(hljs) {
             // we also need to allow for multiple possible comments inbetween
             // the first key:value pairing
             /(((\/\/.*$)|(\/\*(.|\n)*\*\/))\s*)*/,
-            IDENT_RE + '\\s*:'))),
+            IDENT_RE + '\s*:'))),
         relevance: 0,
         contains: [
           {
             className: 'attr',
-            begin: IDENT_RE + regex.lookahead('\\s*:'),
+            begin: IDENT_RE + regex.lookahead('\s*:'),
             relevance: 0,
           },
         ]
       },
       { // "value" container
-        begin: '(' + hljs.RE_STARTERS_RE + '|\\b(case|return|throw)\\b)\\s*',
+        begin: '(' + hljs.RE_STARTERS_RE + '|\b(case|return|throw)\b)\s*',
         keywords: 'return throw case',
         contains: [
           hljs.C_LINE_COMMENT_MODE,
@@ -187,13 +187,13 @@ export default function(hljs) {
             // we have to count the parens to make sure we actually have the
             // correct bounding ( ) before the =>.  There could be any number of
             // sub-expressions inside also surrounded by parens.
-            begin: '(\\([^(]*' +
-              '(\\([^(]*' +
-                '(\\([^(]*' +
-                '\\))?' +
-              '\\))?' +
-            '\\)|' + hljs.UNDERSCORE_IDENT_RE + ')\\s*=>', returnBegin: true,
-            end: '\\s*=>',
+            begin: '(\([^(]*' +
+              '(\([^(]*' +
+                '(\([^(]*' +
+                '\))?' +
+              '\))?' +
+            '\)|' + hljs.UNDERSCORE_IDENT_RE + ')\s*=>', returnBegin: true,
+            end: '\s*=>',
             contains: [
               {
                 className: 'params',
@@ -268,7 +268,7 @@ export default function(hljs) {
         beginKeywords: 'constructor', end: /\{/, excludeEnd: true
       },
       {
-        begin: '(get|set)\\s+(?=' + IDENT_RE + '\\()',
+        begin: '(get|set)\s+(?=' + IDENT_RE + '\()',
         end: /{/,
         keywords: "get set",
         contains: [
