@@ -87,7 +87,8 @@ export default function(hljs) {
   };
 
   const HELPER_PARAMETER = hljs.inherit(HELPER_NAME_OR_PATH_EXPRESSION, {
-    keywords: LITERALS
+    keywords: LITERALS,
+    className: 'string' // Add className for consistent value highlighting
   });
 
   const SUB_EXPRESSION = {
@@ -146,7 +147,7 @@ export default function(hljs) {
   };
 
   const SUB_EXPRESSION_CONTENTS = hljs.inherit(HELPER_NAME_OR_PATH_EXPRESSION, {
-    className: 'name',
+    className: 'keyword', // Change from 'name' to 'keyword' for built-ins
     keywords: BUILT_INS,
     starts: hljs.inherit(HELPER_PARAMETERS, {
       end: /\)/,
@@ -159,7 +160,7 @@ export default function(hljs) {
 
   const OPENING_BLOCK_MUSTACHE_CONTENTS = hljs.inherit(HELPER_NAME_OR_PATH_EXPRESSION, {
     keywords: BUILT_INS,
-    className: 'name',
+    className: 'keyword', // Change from 'name' to 'keyword'
     starts: hljs.inherit(HELPER_PARAMETERS, {
       end: /}}/,
     })
@@ -218,6 +219,14 @@ export default function(hljs) {
         begin: /\{\{(?=else\}\})/,
         end: /\}\}/,
         keywords: 'else'
+      },
+      {
+        // else if block statement
+        className: 'template-tag',
+        begin: /\{\{else\s+if/,
+        end: /\}\}/,
+        contains: [OPENING_BLOCK_MUSTACHE_CONTENTS],
+        keywords: 'else if'
       },
       {
         // closing block statement
