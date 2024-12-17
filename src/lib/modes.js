@@ -68,20 +68,35 @@ export const COMMENT = function(begin, end, modeOptions = {}) {
       className: 'comment',
       begin,
       end,
-      contains: []
+      contains: [],
+      endsWithParent: true,
+      relevance: 0,
+      "on:begin": (match, response) => {
+        if (match.index === 0 && match.input.charAt(match[0].length) === end.charAt(0)) {
+          response.skip = true;
+        }
+      }
     },
     modeOptions
   );
-  mode.contains.push(PHRASAL_WORDS_MODE);
-  mode.contains.push({
-    className: 'doctag',
-    begin: '(?:TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):',
-    relevance: 0
-  });
+  if (!mode.skip) {
+    mode.contains.push(PHRASAL_WORDS_MODE);
+    mode.contains.push({
+      className: 'doctag',
+      begin: '(?:TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):',
+      relevance: 0
+    });
+  }
   return mode;
 };
 export const C_LINE_COMMENT_MODE = COMMENT('//', '$');
-export const C_BLOCK_COMMENT_MODE = COMMENT('/\\*', '\\*/');
+export const C_BLOCK_COMMENT_MODE = COMMENT('/\\*', '\\*/', {
+  illegal: null,
+  relevance: 0,
+  "on:end": (match, response) => {
+    response.resetTo = match.index + match[0].length;
+  }
+});
 export const HASH_COMMENT_MODE = COMMENT('#', '$');
 export const NUMBER_MODE = {
   className: 'number',
@@ -100,25 +115,19 @@ export const BINARY_NUMBER_MODE = {
 };
 export const CSS_NUMBER_MODE = {
   className: 'number',
-  begin: NUMBER_RE + '(' +
-    '%|em|ex|ch|rem' +
-    '|vw|vh|vmin|vmax' +
-    '|cm|mm|in|pt|pc|px' +
-    '|deg|grad|rad|turn' +
-    '|s|ms' +
-    '|Hz|kHz' +
-    '|dpi|dpcm|dppx' +
-    ')?',
+  begin: NUMBER_RE + '('
+    + '%|em|ex|ch|rem'
+    + '|vw|vh|vmin|vmax'
+    + '|cm|mm|in|pt|pc|px'
+    + '|deg|grad|rad|turn'
+    + '|s|ms'
+    + '|Hz|kHz'
+    + '|dpi|dpcm|dppx'
+    + ')?',
   relevance: 0
 };
 export const REGEXP_MODE = {
-  // this outer rule makes sure we actually have a WHOLE regex and not simply
-  // an expression such as:
-  //
-  //     3 / something
-  //
-  // (which will then blow up when regex's `illegal` sees the newline)
-  begin: /(?=\/[^/\n]*\/)/,
+  begin: /(?=\/[^\/\n]*\/)/,
   contains: [{
     className: 'regexp',
     begin: /\//,
@@ -146,7 +155,6 @@ export const UNDERSCORE_TITLE_MODE = {
   relevance: 0
 };
 export const METHOD_GUARD = {
-  // excludes method names from keyword processing
   begin: '\\.\\s*' + UNDERSCORE_IDENT_RE,
   relevance: 0
 };
