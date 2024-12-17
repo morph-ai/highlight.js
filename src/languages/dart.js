@@ -170,7 +170,11 @@ export default function(hljs) {
         }
       ),
       hljs.C_LINE_COMMENT_MODE,
-      hljs.C_BLOCK_COMMENT_MODE,
+      {
+        begin: /\/\*/,
+        end: /\*\//,
+        className: 'comment'
+      },
       {
         className: 'class',
         beginKeywords: 'class interface',
