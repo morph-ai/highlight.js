@@ -165,12 +165,63 @@ export default function(hljs) {
         },
         {
           className: 'regexp',
-          begin: /(m|qr)?\//,
-          end: regex.concat(
-            /\//,
-            REGEX_MODIFIERS
-          ),
-          contains: [ hljs.BACKSLASH_ESCAPE ],
+          variants: [
+            {
+              begin: /(m|qr)?\//,
+              end: regex.concat(/\//, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /m\(/,
+              end: regex.concat(/\)/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /m\{/,
+              end: regex.concat(/\}/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /m\[/,
+              end: regex.concat(/\]/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /m</,
+              end: regex.concat(/>/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /m([^a-zA-Z0-9\s\{\(\[<])/,
+              end: regex.concat(/\1/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /qr\(/,
+              end: regex.concat(/\)/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /qr\{/,
+              end: regex.concat(/\}/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /qr\[/,
+              end: regex.concat(/\]/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /qr</,
+              end: regex.concat(/>/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            },
+            {
+              begin: /qr([^a-zA-Z0-9\s\{\(\[<])/,
+              end: regex.concat(/\1/, REGEX_MODIFIERS),
+              contains: [ hljs.BACKSLASH_ESCAPE ]
+            }
+          ],
           relevance: 0 // allows empty "//" which is a common comment delimiter in other languages
         }
       ]
