@@ -84,6 +84,22 @@ export default function(hljs) {
     relevance: 0
   };
 
+  const PIPE = {
+    className: 'meta',
+    begin: /[|>]/
+  };
+
+  const LINE_CONTINUATION = {
+    className: 'meta',
+    begin: /\\$/
+  };
+
+  const HERE_DOC = {
+    className: 'meta',
+    begin: /<<<?/,
+    end: /$/
+  };
+
   return {
     name: 'Bash',
     aliases: ['sh', 'zsh'],
@@ -120,7 +136,10 @@ export default function(hljs) {
       QUOTE_STRING,
       ESCAPED_QUOTE,
       APOS_STRING,
-      VAR
+      VAR,
+      PIPE,
+      LINE_CONTINUATION,
+      HERE_DOC
     ]
   };
 }
