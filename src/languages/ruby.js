@@ -107,7 +107,7 @@ export default function(hljs) {
       {
         // \B in the beginning suppresses recognition of ?-sequences where ?
         // is the last character of a preceding identifier, as in: `func?4`
-        begin: /\B\?(\\\d{1,3}|\\x[A-Fa-f0-9]{1,2}|\\u[A-Fa-f0-9]{4}|\\?\S)\b/
+        begin: /\B\?((?:\\[MC]-)?(?:\\\\|\\\d{1,3}|\\x[A-Fa-f0-9]{1,2}|\\u(?:[A-Fa-f0-9]{4}|\{[A-Fa-f0-9]+\})|[^\s\\]))\b/
       },
       { // heredocs
         begin: /<<[-~]?'?(\w+)\n(?:[^\n]*\n)*?\s*\1\b/,
