@@ -112,6 +112,21 @@ export default function(hljs) {
     'type',
     'vars',
     'zip',
+    'Dict',
+    'List',
+    'Any',
+    'Union',
+    'Optional',
+    'Tuple',
+    'Set',
+    'TypeVar',
+    'Generic',
+    'Protocol',
+    'Callable',
+    'Type',
+    'NoReturn',
+    'ClassVar',
+    'Final'
   ];
 
   const LITERALS = [
@@ -130,7 +145,7 @@ export default function(hljs) {
   };
 
   const PROMPT = {
-    className: 'meta',  begin: /^(>>>|\.\.\.) /
+    className: 'meta',  begin: /^(>>>|\.{3}) /
   };
 
   const SUBST = {
@@ -230,15 +245,49 @@ export default function(hljs) {
     ]
   };
 
+  const TYPE_HINT = {
+    className: 'type',
+    begin: /\[/,
+    end: /\]/,
+    contains: [
+      'self',
+      {
+        className: 'built_in',
+        variants: [
+          { begin: /\b[A-Z][a-zA-Z0-9_]*\b/ }
+        ],
+      },
+      {
+        begin: /\s*,\s*/,
+        relevance: 0
+      },
+      NUMBER,
+      STRING
+    ],
+    relevance: 10
+  };
+
   const PARAMS = {
     className: 'params',
     variants: [
-      // Exclude params at functions without params
       {begin: /\(\s*\)/, skip: true, className: null },
       {
         begin: /\(/, end: /\)/, excludeBegin: true, excludeEnd: true,
         keywords: KEYWORDS,
-        contains: ['self', PROMPT, NUMBER, STRING, hljs.HASH_COMMENT_MODE],
+        contains: ['self', PROMPT, NUMBER, STRING, hljs.HASH_COMMENT_MODE, {
+          begin: /:\s*/,
+          end: /(?=(,|\)))/,
+          contains: [
+            {
+              className: 'built_in',
+              variants: [
+                { begin: /\b[A-Z][a-zA-Z0-9_]*\b/ }
+              ]
+            },
+            TYPE_HINT
+          ],
+          relevance: 10
+        }],
       },
     ],
   };
@@ -252,9 +301,7 @@ export default function(hljs) {
     contains: [
       PROMPT,
       NUMBER,
-      // eat "if" prior to string so that it won't accidentally be
-      // labeled as an f-string as in:
-      { begin: /\bself\b/, }, // very common convention
+      { begin: /\bself\b/, },
       { beginKeywords: "if", relevance: 0 },
       STRING,
       hljs.HASH_COMMENT_MODE,
@@ -270,7 +317,16 @@ export default function(hljs) {
           PARAMS,
           {
             begin: /->/, endsWithParent: true,
-            keywords: 'None'
+            contains: [
+              {
+                className: 'built_in',
+                variants: [
+                  { begin: /\b[A-Z][a-zA-Z0-9_]*\b/ }
+                ]
+              },
+              TYPE_HINT
+            ],
+            relevance: 10
           }
         ]
       },
@@ -280,7 +336,20 @@ export default function(hljs) {
         contains: [NUMBER, PARAMS, STRING]
       },
       {
-        begin: /\b(print|exec)\(/ // don’t highlight keywords-turned-functions in Python 3
+        begin: /\b(print|exec)\(/
+      },
+      {
+        className: 'comment',
+        begin: /#\s*type:\s*/,
+        end: /$/,
+        contains: [
+          {
+            className: 'built_in',
+            begin: /\b[A-Z][a-zA-Z0-9_]*\b/
+          },
+          TYPE_HINT
+        ],
+        relevance: 10
       }
     ]
   };
