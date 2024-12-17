@@ -176,7 +176,8 @@ export default function(hljs) {
     CSS_TEMPLATE,
     TEMPLATE_STRING,
     NUMBER,
-    hljs.REGEXP_MODE
+    hljs.REGEXP_MODE,
+    ...PARAMS_CONTAINS
   ];
   const SUBST_AND_COMMENTS = [].concat(COMMENT, SUBST.contains);
   const PARAMS_CONTAINS = SUBST_AND_COMMENTS.concat([
