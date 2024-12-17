@@ -130,26 +130,55 @@ export default function(hljs) {
       },
       {
         className: 'function',
-        relevance: 0,
-        beginKeywords: 'fn function', end: /[;{]/, excludeEnd: true,
-        illegal: '[$%\\[]',
-        contains: [
-          hljs.UNDERSCORE_TITLE_MODE,
+        variants: [
           {
-            begin: '=>' // No markup, just a relevance booster
+            // Regular function variant
+            beginKeywords: 'function',
+            end: /[;{]/,
+            excludeEnd: true,
+            illegal: '[$%\\[]',
+            contains: [
+              hljs.UNDERSCORE_TITLE_MODE,
+              {
+                className: 'params',
+                begin: '\\(', end: '\\)',
+                excludeBegin: true,
+                excludeEnd: true,
+                keywords: KEYWORDS,
+                contains: [
+                  'self',
+                  VARIABLE,
+                  hljs.C_BLOCK_COMMENT_MODE,
+                  STRING,
+                  NUMBER
+                ]
+              }
+            ]
           },
           {
-            className: 'params',
-            begin: '\\(', end: '\\)',
-            excludeBegin: true,
+            // Arrow function variant
+            beginKeywords: 'fn',
+            end: /[;{]/,
             excludeEnd: true,
-            keywords: KEYWORDS,
+            illegal: '[$%\\[]',
             contains: [
-              'self',
-              VARIABLE,
-              hljs.C_BLOCK_COMMENT_MODE,
-              STRING,
-              NUMBER
+              {
+                begin: '=>'
+              },
+              {
+                className: 'params',
+                begin: '\\(', end: '\\)',
+                excludeBegin: true,
+                excludeEnd: true,
+                keywords: KEYWORDS,
+                contains: [
+                  'self',
+                  VARIABLE,
+                  hljs.C_BLOCK_COMMENT_MODE,
+                  STRING,
+                  NUMBER
+                ]
+              }
             ]
           }
         ]
