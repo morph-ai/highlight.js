@@ -142,13 +142,25 @@ export default function(hljs) {
         contains: [
           {
             className: 'string',
-            begin: '\'', end: '\'',
-            contains: [{begin: '\'\''}]
+            begin: '\'',
+            end: '\'',
+            contains: [
+              {begin: '\'\''},
+              // Add support for T-SQL nested quotes with N prefix
+              {begin: 'N\'', end: '\'', contains: [{begin: '\'\''}]},
+              // Handle nested dynamic SQL quotes
+              {begin: '\'\'\'', end: '\'\'\''}
+            ]
           },
           {
             className: 'string',
-            begin: '"', end: '"',
-            contains: [{begin: '""'}]
+            begin: '"',
+            end: '"',
+            contains: [
+              {begin: '""'},
+              // Handle nested quotes in double-quoted strings
+              {begin: '""', end: '""'}
+            ]
           },
           {
             className: 'string',
