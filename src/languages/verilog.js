@@ -112,17 +112,22 @@ export default function(hljs) {
       },
       {
         className: 'meta',
-        begin: '`',
-        end: '$',
-        keywords: {
-          keyword:
-            'define __FILE__ ' +
-            '__LINE__ begin_keywords celldefine default_nettype define ' +
-            'else elsif end_keywords endcelldefine endif ifdef ifndef ' +
-            'include line nounconnected_drive pragma resetall timescale ' +
-            'unconnected_drive undef undefineall'
-        },
-        relevance: 0
+        variants: [
+          {
+            begin: '`\\s*(define|__FILE__|__LINE__|begin_keywords|celldefine|default_nettype|define|else|elsif|end_keywords|endcelldefine|endif|ifdef|ifndef|include|line|nounconnected_drive|pragma|resetall|timescale|unconnected_drive|undef|undefineall)\\b',
+            end: '$',
+            keywords: {
+              keyword: 'define __FILE__ __LINE__ begin_keywords celldefine default_nettype define else elsif end_keywords endcelldefine endif ifdef ifndef include line nounconnected_drive pragma resetall timescale unconnected_drive undef undefineall'
+            },
+            contains: [
+              hljs.C_LINE_COMMENT_MODE
+            ]
+          },
+          {
+            begin: '`[a-zA-Z_][a-zA-Z0-9_]*\\b',
+            relevance: 0
+          }
+        ]
       }
     ]
   };
