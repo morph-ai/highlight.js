@@ -77,7 +77,7 @@ const HLJS = function(hljs) {
         logger.warn(LANGUAGE_NOT_FOUND.replace("{}", match[1]));
         logger.warn("Falling back to no-highlight mode for this block.", block);
       }
-      return language ? match[1] : 'no-highlight';
+      return language ? language.name : 'no-highlight';
     }
 
     return classes
@@ -657,10 +657,16 @@ const HLJS = function(hljs) {
    * @param {string} [resultLang]
    */
   function updateClassName(element, currentLang, resultLang) {
-    const language = currentLang ? aliases[currentLang] : resultLang;
-
+    const normalizedLang = currentLang ? getLanguage(currentLang)?.name : resultLang;
+    
     element.classList.add("hljs");
-    if (language) element.classList.add(language);
+    if (normalizedLang) {
+      element.classList.add(normalizedLang);
+      // Add the language-prefixed class if it matches the original class
+      if (element.className.includes(`language-${currentLang}`)) {
+        element.classList.add(`language-${normalizedLang}`);
+      }
+    }
   }
 
   /**
