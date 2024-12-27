@@ -105,7 +105,7 @@ export default function(hljs) {
   };
   const MAGIC_COMMENT = {
     className: 'meta',
-    begin: '% !TeX',
+    begin: /% ![Tt][Ee][Xx]/,
     end: '$',
     relevance: 10
   };
