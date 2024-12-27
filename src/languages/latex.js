@@ -22,10 +22,19 @@ export default function(hljs) {
           relevance: 0,
           contains: [
             {
-              className: 'string', // because it looks like attributes in HTML tags
+              className: 'bracket',
+              relevance: 0,
               variants: [
-                {begin: /\[/, end: /\]/},
-                {begin: /\{/, end: /\}/}
+                {
+                  begin: /\[/,
+                  end: /\]/,
+                  contains: ['self', COMMAND]
+                },
+                {
+                  begin: /\{/,
+                  end: /\}/,
+                  contains: ['self', COMMAND]
+                }
               ]
             },
             {
