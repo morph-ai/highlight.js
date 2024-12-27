@@ -69,7 +69,7 @@ export default function(hljs) {
   const TITLE_NAME_RE = /\w[\w\d]*((-)[\w\d]+)*/;
 
   const BACKTICK_ESCAPE = {
-    begin: '`[\\s\\S]',
+    begin: '`[\s\S]',
     relevance: 0
   };
 
@@ -168,7 +168,7 @@ export default function(hljs) {
     className: 'built_in',
     variants: [
       {
-        begin: '('.concat(VALID_VERBS, ')+(-)[\\w\\d]+')
+        begin: '('.concat(VALID_VERBS, ')+(-)[\w\d]+')
       }
     ]
   };
@@ -232,11 +232,11 @@ export default function(hljs) {
       // PS literals are pretty verbose so it's a good idea to accent them a bit.
       {
         className: 'operator',
-        begin: '('.concat(COMPARISON_OPERATORS, ')\\b')
+        begin: '('.concat(COMPARISON_OPERATORS, ')\b')
       },
       {
         className: 'literal',
-        begin: /(-)[\w\d]+/,
+        begin: /(-{1,2})[\w\d]+/,
         relevance: 0
       }
     ]
@@ -293,7 +293,7 @@ export default function(hljs) {
         className: 'keyword',
         begin: '('.concat(
           KEYWORDS.keyword.toString().replace(/\s/g, '|'
-          ), ')\\b'),
+          ), ')\b'),
         endsParent: true,
         relevance: 0
       },
