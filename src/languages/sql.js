@@ -142,8 +142,16 @@ export default function(hljs) {
         contains: [
           {
             className: 'string',
-            begin: '\'', end: '\'',
-            contains: [{begin: '\'\''}]
+            begin: /N?'/, end: '\'',
+            contains: [
+              {begin: '\'\''},  // Basic quote escaping
+              {
+                // Handle nested quotes in TSQL dynamic SQL
+                begin: '\'(?=[^\']*\'[^\']*$)',
+                end: '\'',
+                relevance: 0
+              }
+            ]
           },
           {
             className: 'string',
