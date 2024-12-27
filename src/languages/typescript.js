@@ -25,6 +25,15 @@ export default function(hljs) {
     "never",
     "enum"
   ];
+  const TYPE_PARAM_LIST = {
+    begin: /</,
+    end: />/,
+    contains: [{
+      className: 'type',
+      begin: IDENT_RE,
+      relevance: 0
+    }]
+  };
   const NAMESPACE = {
     beginKeywords: 'namespace',
     end: /\{/,
@@ -42,7 +51,8 @@ export default function(hljs) {
       built_in: TYPES
     },
     contains: [
-      tsLanguage.exports.CLASS_REFERENCE
+      tsLanguage.exports.CLASS_REFERENCE,
+      TYPE_PARAM_LIST
     ]
   };
   const USE_STRICT = {
@@ -92,6 +102,7 @@ export default function(hljs) {
     DECORATOR,
     NAMESPACE,
     INTERFACE,
+    TYPE_PARAM_LIST
   ]);
 
   // TS gets a simpler shebang rule than JS
