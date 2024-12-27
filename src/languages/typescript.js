@@ -74,10 +74,24 @@ export default function(hljs) {
   Object.assign(tsLanguage.keywords, KEYWORDS);
 
   tsLanguage.exports.PARAMS_CONTAINS.push(DECORATOR);
+
+  const GENERIC_TYPE_PARAMETER = {
+    className: 'type-parameter',
+    begin: /</, end: />/,
+    contains: [{
+      className: 'type-parameter-name',
+      begin: IDENT_RE,
+      keywords: {
+        keyword: 'extends'
+      }
+    }]
+  };
+
   tsLanguage.contains = tsLanguage.contains.concat([
     DECORATOR,
     NAMESPACE,
     INTERFACE,
+    GENERIC_TYPE_PARAMETER
   ]);
 
   // TS gets a simpler shebang rule than JS
@@ -86,6 +100,9 @@ export default function(hljs) {
   swapMode(tsLanguage, "use_strict", USE_STRICT);
 
   const functionDeclaration = tsLanguage.contains.find(m => m.label === "func.def");
+  if (functionDeclaration && functionDeclaration.contains) {
+    functionDeclaration.contains.push(GENERIC_TYPE_PARAMETER);
+  }
   functionDeclaration.relevance = 0; // () => {} is more typical in TypeScript
 
   Object.assign(tsLanguage, {
