@@ -131,12 +131,38 @@ export default function(hljs) {
       {
         className: 'function',
         relevance: 0,
-        beginKeywords: 'fn function', end: /[;{]/, excludeEnd: true,
+        beginKeywords: 'function',
+        end: /[;{]/,
+        excludeEnd: true,
         illegal: '[$%\\[]',
         contains: [
           hljs.UNDERSCORE_TITLE_MODE,
           {
-            begin: '=>' // No markup, just a relevance booster
+            className: 'params',
+            begin: '\\(', end: '\\)',
+            excludeBegin: true,
+            excludeEnd: true,
+            keywords: KEYWORDS,
+            contains: [
+              'self',
+              VARIABLE,
+              hljs.C_BLOCK_COMMENT_MODE,
+              STRING,
+              NUMBER
+            ]
+          }
+        ]
+      },
+      {
+        className: 'function',
+        relevance: 0,
+        beginKeywords: 'fn',
+        end: /[;{]/,
+        excludeEnd: true,
+        illegal: '[$%\\[]',
+        contains: [
+          {
+            begin: '=>'
           },
           {
             className: 'params',
