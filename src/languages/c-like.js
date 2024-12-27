@@ -40,13 +40,13 @@ export default function(hljs) {
   };
 
   // https://en.cppreference.com/w/cpp/language/escape
-  // \\ \x \xFF \u2837 \u00323747 \374
+  // \\ \\x \\xFF \\u2837 \\u00323747 \\374
   const CHARACTER_ESCAPES = '\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4,8}|[0-7]{3}|\\S)';
   const STRINGS = {
     className: 'string',
     variants: [
       {
-        begin: '(u8?|U|L)?"',
+        begin: '(u8?|U|L)"',
         end: '"',
         illegal: '\\n',
         contains: [ hljs.BACKSLASH_ESCAPE ]
@@ -70,7 +70,7 @@ export default function(hljs) {
         begin: '\\b(0b[01\']+)'
       },
       {
-        begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)(u|U|l|L|ul|UL|f|F|b|B)'
+        begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)(ll|LL|ull|ULL|ul|UL|u|U|l|L|f|F|b|B)'
       },
       {
         begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)'
@@ -81,7 +81,7 @@ export default function(hljs) {
 
   const PREPROCESSOR = {
     className: 'meta',
-    begin: /#\s*[a-z]+\b/,
+    begin: /#\\s*[a-z]+\\b/,
     end: /$/,
     keywords: {
       'meta-keyword':
@@ -187,7 +187,7 @@ export default function(hljs) {
     end: /[{;=]/,
     excludeEnd: true,
     keywords: CPP_KEYWORDS,
-    illegal: /[^\w\s\*&:<>.]/,
+    illegal: /[^\\w\\s\\*&:<>.]/,
     contains: [
       { // to prevent it from being confused as the function title
         begin: DECLTYPE_AUTO_RE,
