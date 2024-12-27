@@ -144,7 +144,7 @@ export default function(hljs) {
   ];
 
   const KEYWORDS = {
-    $pattern: /[A-Za-z]\w+|__\w+__/,
+    $pattern: /[A-Za-z]\w+|__\w+__/, 
     keyword: RESERVED_WORDS,
     built_in: BUILT_INS,
     literal: LITERALS,
@@ -158,14 +158,14 @@ export default function(hljs) {
 
   const SUBST = {
     className: 'subst',
-    begin: /\{/,
+    begin: /\{/, 
     end: /\}/,
     keywords: KEYWORDS,
-    illegal: /#/
+    illegal: /#/ 
   };
 
   const LITERAL_BRACKET = {
-    begin: /\{\{/,
+    begin: /\{\{/, 
     relevance: 0
   };
 
@@ -174,7 +174,7 @@ export default function(hljs) {
     contains: [ hljs.BACKSLASH_ESCAPE ],
     variants: [
       {
-        begin: /([uU]|[bB]|[rR]|[bB][rR]|[rR][bB])?'''/,
+        begin: /([uU]|[bB]|[rR]|[bB][rR]|[rR][bB])?'''/, 
         end: /'''/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -183,7 +183,7 @@ export default function(hljs) {
         relevance: 10
       },
       {
-        begin: /([uU]|[bB]|[rR]|[bB][rR]|[rR][bB])?"""/,
+        begin: /([uU]|[bB]|[rR]|[bB][rR]|[rR][bB])?"""/, 
         end: /"""/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -192,7 +192,7 @@ export default function(hljs) {
         relevance: 10
       },
       {
-        begin: /([fF][rR]|[rR][fF]|[fF])'''/,
+        begin: /([fF][rR]|[rR][fF]|[fF])'''/, 
         end: /'''/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -202,7 +202,7 @@ export default function(hljs) {
         ]
       },
       {
-        begin: /([fF][rR]|[rR][fF]|[fF])"""/,
+        begin: /([fF][rR]|[rR][fF]|[fF])"""/, 
         end: /"""/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -212,25 +212,25 @@ export default function(hljs) {
         ]
       },
       {
-        begin: /([uU]|[rR])'/,
+        begin: /([uU]|[rR])'/, 
         end: /'/,
         relevance: 10
       },
       {
-        begin: /([uU]|[rR])"/,
+        begin: /([uU]|[rR])"/, 
         end: /"/,
         relevance: 10
       },
       {
-        begin: /([bB]|[bB][rR]|[rR][bB])'/,
+        begin: /([bB]|[bB][rR]|[rR][bB])'/, 
         end: /'/
       },
       {
-        begin: /([bB]|[bB][rR]|[rR][bB])"/,
+        begin: /([bB]|[bB][rR]|[rR][bB])"/, 
         end: /"/
       },
       {
-        begin: /([fF][rR]|[rR][fF]|[fF])'/,
+        begin: /([fF][rR]|[rR][fF]|[fF])'/, 
         end: /'/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -239,7 +239,7 @@ export default function(hljs) {
         ]
       },
       {
-        begin: /([fF][rR]|[rR][fF]|[fF])"/,
+        begin: /([fF][rR]|[rR][fF]|[fF])"/, 
         end: /"/,
         contains: [
           hljs.BACKSLASH_ESCAPE,
@@ -254,7 +254,7 @@ export default function(hljs) {
 
   // https://docs.python.org/3.9/reference/lexical_analysis.html#numeric-literals
   const digitpart = '[0-9](_?[0-9])*';
-  const pointfloat = `(\\b(${digitpart}))?\\.(${digitpart})|\\b(${digitpart})\\.`;
+  const pointfloat = `(\b(${digitpart}))?\.(${digitpart})|\b(${digitpart})\.`;
   const NUMBER = {
     className: 'number',
     relevance: 0,
@@ -270,10 +270,10 @@ export default function(hljs) {
       // because both MUST contain a decimal point and so cannot be confused with
       // the interior part of an identifier
       {
-        begin: `(\\b(${digitpart})|(${pointfloat}))[eE][+-]?(${digitpart})[jJ]?\\b`
+        begin: `(\b(${digitpart})|(${pointfloat}))[eE][+-]?(${digitpart})[jJ]?\b`
       },
       {
-        begin: `(${pointfloat})[jJ]?`
+        begin: `(${pointfloat})(\b|(?=[^.]))[jJ]?`
       },
 
       // decinteger, bininteger, octinteger, hexinteger
@@ -283,22 +283,22 @@ export default function(hljs) {
       // decinteger is optionally imaginary
       // https://docs.python.org/3.9/reference/lexical_analysis.html#imaginary-literals
       {
-        begin: '\\b([1-9](_?[0-9])*|0+(_?0)*)[lLjJ]?\\b'
+        begin: '\b([1-9](_?[0-9])*|0+(_?0)*)[lLjJ]?\b'
       },
       {
-        begin: '\\b0[bB](_?[01])+[lL]?\\b'
+        begin: '\b0[bB](_?[01])+[lL]?\b'
       },
       {
-        begin: '\\b0[oO](_?[0-7])+[lL]?\\b'
+        begin: '\b0[oO](_?[0-7])+[lL]?\b'
       },
       {
-        begin: '\\b0[xX](_?[0-9a-fA-F])+[lL]?\\b'
+        begin: '\b0[xX](_?[0-9a-fA-F])+[lL]?\b'
       },
 
       // imagnumber (digitpart-based)
       // https://docs.python.org/3.9/reference/lexical_analysis.html#imaginary-literals
       {
-        begin: `\\b(${digitpart})[jJ]\\b`
+        begin: `\b(${digitpart})[jJ]\b`
       }
     ]
   };
@@ -378,7 +378,7 @@ export default function(hljs) {
       hljs.HASH_COMMENT_MODE,
       {
         match: [
-          /def/, /\s+/,
+          /def/, /\s+/, 
           IDENT_RE,
         ],
         scope: {
@@ -391,14 +391,14 @@ export default function(hljs) {
         variants: [
           {
             match: [
-              /class/, /\s+/,
-              IDENT_RE, /\s*/,
+              /class/, /\s+/, 
+              IDENT_RE, /\s*/, 
               /\(\s*/, IDENT_RE,/\s*\)/
             ],
           },
           {
             match: [
-              /class/, /\s+/,
+              /class/, /\s+/, 
               IDENT_RE
             ],
           }
