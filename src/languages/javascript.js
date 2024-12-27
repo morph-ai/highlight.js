@@ -171,7 +171,16 @@ export default function(hljs) {
     className: "comment",
     variants: [
       JSDOC_COMMENT,
-      hljs.C_BLOCK_COMMENT_MODE,
+      {
+        begin: /\/\*/,
+        end: /\*\//,
+        contains: [
+          {
+            className: 'doctag',
+            begin: '@[A-Za-z]+'
+          }
+        ]
+      },
       hljs.C_LINE_COMMENT_MODE
     ]
   };
