@@ -165,11 +165,37 @@ export default function(hljs) {
         },
         {
           className: 'regexp',
-          begin: /(m|qr)?\//,
-          end: regex.concat(
-            /\//,
-            REGEX_MODIFIERS
-          ),
+          variants: [
+            {
+              begin: /(m|qr)?\//,
+              end: regex.concat(/\//, REGEX_MODIFIERS)
+            },
+            {
+              begin: '(m|qr)?\\s*\\(',
+              end: regex.concat('\\)', REGEX_MODIFIERS),
+              relevance: 5
+            },
+            {
+              begin: '(m|qr)?\\s*\\[',
+              end: regex.concat('\\]', REGEX_MODIFIERS),
+              relevance: 5
+            },
+            {
+              begin: '(m|qr)?\\s*\\{',
+              end: regex.concat('\\}', REGEX_MODIFIERS),
+              relevance: 5
+            },
+            {
+              begin: '(m|qr)?\\s*\\|',
+              end: regex.concat('\\|', REGEX_MODIFIERS),
+              relevance: 5
+            },
+            {
+              begin: '(m|qr)?\\s*<',
+              end: regex.concat('>', REGEX_MODIFIERS),
+              relevance: 5
+            }
+          ],
           contains: [ hljs.BACKSLASH_ESCAPE ],
           relevance: 0 // allows empty "//" which is a common comment delimiter in other languages
         }
