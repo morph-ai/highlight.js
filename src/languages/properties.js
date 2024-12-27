@@ -8,14 +8,14 @@ Category: common, config
 export default function(hljs) {
 
   // whitespaces: space, tab, formfeed
-  var WS0 = '[ \\t\\f]*';
-  var WS1 = '[ \\t\\f]+';
+  var WS0 = '[ \t\f]*';
+  var WS1 = '[ \t\f]+';
   // delimiter
   var EQUAL_DELIM = WS0+'[:=]'+WS0;
   var WS_DELIM = WS1;
   var DELIM = '(' + EQUAL_DELIM + '|' + WS_DELIM + ')';
-  var KEY_ALPHANUM = '([^\\\\\\W:= \\t\\f\\n]|\\\\.)+';
-  var KEY_OTHER = '([^\\\\:= \\t\\f\\n]|\\\\.)+';
+  var KEY_ALPHANUM = '([^\\\W:= \t\f\n]|\\.)+';
+  var KEY_OTHER = '([^\\:= \t\f\n]|\\.)+';
 
   var DELIM_AND_VALUE = {
           // skip DELIM
@@ -27,7 +27,7 @@ export default function(hljs) {
             end: /$/,
             relevance: 0,
             contains: [
-              { begin: '\\\\\\n' }
+              { begin: '(?<!\\)\\\n' }
             ]
           }
         };
@@ -37,7 +37,7 @@ export default function(hljs) {
     case_insensitive: true,
     illegal: /\S/,
     contains: [
-      hljs.COMMENT('^\\s*[!#]', '$'),
+      hljs.COMMENT('^\s*[!#]', '$'),
       // key: everything until whitespace or = or : (taking into account backslashes)
       // case of a "normal" key
       {
