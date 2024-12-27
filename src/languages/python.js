@@ -112,6 +112,17 @@ export default function(hljs) {
     'type',
     'vars',
     'zip',
+    // Add typing module types
+    'Any',
+    'Dict',
+    'List',
+    'Optional',
+    'Tuple',
+    'Set',
+    'Union',
+    'TypeVar',
+    'Generic',
+    'Callable'
   ];
 
   const LITERALS = [
@@ -238,7 +249,12 @@ export default function(hljs) {
       {
         begin: /\(/, end: /\)/, excludeBegin: true, excludeEnd: true,
         keywords: KEYWORDS,
-        contains: ['self', PROMPT, NUMBER, STRING, hljs.HASH_COMMENT_MODE],
+        contains: ['self', PROMPT, NUMBER, STRING, hljs.HASH_COMMENT_MODE,
+          {
+            className: 'built_in',
+            begin: /:\s*[A-Za-z_][\w]*/
+          }
+        ],
       },
     ],
   };
@@ -270,7 +286,10 @@ export default function(hljs) {
           PARAMS,
           {
             begin: /->/, endsWithParent: true,
-            keywords: 'None'
+            contains: [{
+              begin: /[A-Za-z_][\w]*/,
+              className: 'built_in'
+            }]
           }
         ]
       },
@@ -281,6 +300,15 @@ export default function(hljs) {
       },
       {
         begin: /\b(print|exec)\(/ // don’t highlight keywords-turned-functions in Python 3
+      },
+      {
+        className: 'meta',
+        begin: /#\s*type:\s*/,
+        end: /$/,
+        contains: [{
+          begin: /[A-Za-z_][\w]*/,
+          className: 'built_in'
+        }]
       }
     ]
   };
