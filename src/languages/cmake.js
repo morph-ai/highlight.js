@@ -52,7 +52,21 @@ export default function(hljs) {
         begin: /\$\{/,
         end: /\}/
       },
-      hljs.HASH_COMMENT_MODE,
+      {
+        className: 'comment',
+        variants: [
+          {
+            begin: /#\[\[/,
+            end: /\]\]/,
+            contains: ['self'],
+            relevance: 10
+          },
+          {
+            begin: /#/,
+            end: /$/
+          }
+        ]
+      },
       hljs.QUOTE_STRING_MODE,
       hljs.NUMBER_MODE
     ]
