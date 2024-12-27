@@ -210,7 +210,8 @@ export default function(hljs) {
                     begin: /\(/, end: /\)/,
                     excludeBegin: true, excludeEnd: true,
                     keywords: KEYWORDS,
-                    contains: PARAMS_CONTAINS
+                    contains: PARAMS_CONTAINS,
+                    relevance: 0
                   }
                 ]
               }
