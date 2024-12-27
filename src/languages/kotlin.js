@@ -45,7 +45,7 @@ export default function(hljs) {
   };
   const VARIABLE = {
     className: 'variable',
-    begin: '\\$' + hljs.UNDERSCORE_IDENT_RE
+    begin: '\$' + hljs.UNDERSCORE_IDENT_RE
   };
   const STRING = {
     className: 'string',
@@ -83,7 +83,7 @@ export default function(hljs) {
 
   const ANNOTATION_USE_SITE = {
     className: 'meta',
-    begin: '@(?:file|property|field|get|set|receiver|param|setparam|delegate)\\s*:(?:\\s*' + hljs.UNDERSCORE_IDENT_RE + ')?'
+    begin: '@(?:file|property|field|get|set|receiver|param|setparam|delegate)\s*:(?:\s*' + hljs.UNDERSCORE_IDENT_RE + ')?'
   };
   const ANNOTATION = {
     className: 'meta',
@@ -205,7 +205,7 @@ export default function(hljs) {
       {
         className: 'class',
         beginKeywords: 'class interface trait', // remove 'trait' when removed from KEYWORDS
-        end: /[:\{(]|$/,
+        end: /\{|$/,
         excludeEnd: true,
         illegal: 'extends implements',
         contains: [
@@ -221,10 +221,11 @@ export default function(hljs) {
           },
           {
             className: 'type',
-            begin: /[,:]\s*/,
-            end: /[<\(,]|$/,
-            excludeBegin: true,
-            returnEnd: true
+            begin: /:\s*/,
+            end: /[<\{]|$/,
+            excludeBegin: false,
+            returnEnd: true,
+            relevance: 0
           },
           ANNOTATION_USE_SITE,
           ANNOTATION
