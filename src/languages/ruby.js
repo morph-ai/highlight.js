@@ -124,12 +124,12 @@ export default function(hljs) {
       {
         begin: /\B\?\\?\S/
       },
-      { // heredocs
-        begin: /<<[-~]?'?(\w+)\n(?:[^\n]*\n)*?\s*\1\b/,
+      { // standard heredocs (with interpolation)
+        begin: /<<[-~]?(\w+)\n(?:[^\n]*\n)*?\s*\1\b/,
         returnBegin: true,
         contains: [
           {
-            begin: /<<[-~]?'?/
+            begin: /<<[-~]?/
           },
           hljs.END_SAME_AS_BEGIN({
             begin: /(\w+)/,
@@ -137,6 +137,22 @@ export default function(hljs) {
             contains: [
               hljs.BACKSLASH_ESCAPE,
               SUBST
+            ]
+          })
+        ]
+      },
+      { // quoted heredocs (without interpolation)
+        begin: /<<[-~]?'(\w+)'\n(?:[^\n]*\n)*?\s*\1\b/,
+        returnBegin: true,
+        contains: [
+          {
+            begin: /<<[-~]?'/
+          },
+          hljs.END_SAME_AS_BEGIN({
+            begin: /(\w+)/,
+            end: /(\w+)/,
+            contains: [
+              hljs.BACKSLASH_ESCAPE
             ]
           })
         ]
