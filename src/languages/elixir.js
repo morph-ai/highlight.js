@@ -212,6 +212,11 @@ export default function(hljs) {
       begin: '(\\$\\W)|((\\$|@@?)(\\w+))'
     },
     {
+      className: 'function',
+      begin: '&' + ELIXIR_IDENT_RE + '/\\d+',
+      relevance: 10
+    },
+    {
       begin: '->'
     },
     { // regexp container
@@ -234,7 +239,7 @@ export default function(hljs) {
           ],
           variants: [
             {
-              begin: '/',
+              begin: '(?<!&)/',
               end: '/[a-z]*'
             },
             {
