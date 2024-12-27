@@ -357,7 +357,19 @@ export default function(hljs) {
         illegal: /[:"\[\]]/,
         contains: [
           { beginKeywords: 'extends' },
-          hljs.UNDERSCORE_TITLE_MODE
+          hljs.UNDERSCORE_TITLE_MODE,
+          {
+            className: 'function',
+            begin: IDENT_RE + '\\s*\\(',
+            returnBegin: true,
+            excludeEnd: true,
+            end: '\\s*{',
+            contains: [
+              'self',
+              hljs.inherit(hljs.TITLE_MODE, {begin: IDENT_RE}),
+              PARAMS
+            ]
+          }
         ]
       },
       {
