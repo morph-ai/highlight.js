@@ -145,6 +145,16 @@ export default function(hljs) {
     contains: [], // defined later
     variants: [
       {
+        begin: /\*{3}/,
+        end: /\*{3}/,
+        className: 'strong emphasis'
+      },
+      {
+        begin: /_{3}/,
+        end: /_{3}/,
+        className: 'strong emphasis'
+      },
+      {
         begin: /_{2}/,
         end: /_{2}/
       },
