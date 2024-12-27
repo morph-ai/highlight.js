@@ -412,6 +412,7 @@ export default function(hljs) {
       /(?!if)/,
       /(?!for)/,
       /(?!while)/,
+      /(?!switch)/,
       hljs.IDENT_RE,
       regex.lookahead(/(<[^<>]+>|)\s*\(/))
   };
