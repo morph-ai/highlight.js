@@ -271,7 +271,13 @@ export default function(hljs) {
     'vector',
     'weak_ptr',
     'wstring',
-    'wstring_view'
+    'wstring_view',
+    'Matrix3f',
+    'Matrix3d',
+    'MatrixXd',
+    'MatrixXf',
+    'VectorXd',
+    'VectorXf'
   ];
 
   const FUNCTION_HINTS = [
