@@ -177,7 +177,7 @@ export default function(hljs) {
     TEMPLATE_STRING,
     NUMBER,
     hljs.REGEXP_MODE
-  ];
+  ].concat(PARAMS_CONTAINS);
   const SUBST_AND_COMMENTS = [].concat(COMMENT, SUBST.contains);
   const PARAMS_CONTAINS = SUBST_AND_COMMENTS.concat([
     // eat recursive parens in sub expressions
