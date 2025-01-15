@@ -74,7 +74,7 @@ export default function(hljs) {
     // Other keywords:
     // <https://www.php.net/manual/en/reserved.php>
     // <https://www.php.net/manual/en/language.types.type-juggling.php>
-    'array abstract and as binary bool boolean break callable case catch class clone const continue declare ' +
+    'array abstract and as binary bool boolean break callable case catch class clone const continue declare fn ' +
     'default do double else elseif empty enddeclare endfor endforeach endif endswitch endwhile eval extends ' +
     'final finally float for foreach from global goto if implements instanceof insteadof int integer interface ' +
     'isset iterable list match|0 new object or private protected public real return string switch throw trait ' +
@@ -131,7 +131,7 @@ export default function(hljs) {
       {
         className: 'function',
         relevance: 0,
-        beginKeywords: 'fn function', end: /[;{]/, excludeEnd: true,
+        beginKeywords: 'function', end: /[;{]/, excludeEnd: true,
         illegal: '[$%\\[]',
         contains: [
           hljs.UNDERSCORE_TITLE_MODE,
