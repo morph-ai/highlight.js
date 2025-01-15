@@ -66,7 +66,7 @@ export default function(hljs) {
   var CLASS = {
     className: 'class',
     beginKeywords: 'class object trait type',
-    end: /[:={\[\n;]/,
+    end: /[:={\[\n;]|\s+\/\//,
     excludeEnd: true,
     contains: [
       {
