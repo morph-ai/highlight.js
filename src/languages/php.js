@@ -134,9 +134,13 @@ export default function(hljs) {
         beginKeywords: 'fn function', end: /[;{]/, excludeEnd: true,
         illegal: '[$%\\[]',
         contains: [
-          hljs.UNDERSCORE_TITLE_MODE,
           {
-            begin: '=>' // No markup, just a relevance booster
+            className: 'title',
+            begin: /function\s+[a-zA-Z_][a-zA-Z0-9_]*/,
+            relevance: 0
+          },
+          {
+            begin: '=>' // Keep existing arrow function marker
           },
           {
             className: 'params',
