@@ -86,6 +86,7 @@ export default function(hljs) {
           modes.IMPORTANT,
           modes.CSS_NUMBER_MODE,
           ...STRINGS,
+          hljs.C_BLOCK_COMMENT_MODE,
           // needed to highlight these as strings and to avoid issues with
           // illegal characters that might be inside urls that would tigger the
           // languages illegal stack
