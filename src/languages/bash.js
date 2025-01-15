@@ -45,7 +45,7 @@ export default function(hljs) {
   SUBST.contains.push(QUOTE_STRING);
   const ESCAPED_QUOTE = {
     className: '',
-    begin: /\\"/
+    begin: /\"/
 
   };
   const APOS_STRING = {
@@ -84,6 +84,20 @@ export default function(hljs) {
     relevance: 0
   };
 
+  const HEREDOC = {
+    className: 'string',
+    begin: /<<-?['"]?(\w+)['"]?/,
+    end: /^\s*\1$/m,
+    contains: [
+      hljs.BACKSLASH_ESCAPE
+    ]
+  };
+
+  const OPERATORS = {
+    className: 'operator',
+    begin: /(\||\\|>|<|>>|<<|<<<)/
+  };
+
   return {
     name: 'Bash',
     aliases: ['sh', 'zsh'],
@@ -120,7 +134,9 @@ export default function(hljs) {
       QUOTE_STRING,
       ESCAPED_QUOTE,
       APOS_STRING,
-      VAR
+      VAR,
+      HEREDOC,
+      OPERATORS
     ]
   };
 }
