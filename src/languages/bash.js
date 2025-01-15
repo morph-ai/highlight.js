@@ -61,6 +61,19 @@ export default function(hljs) {
       VAR
     ]
   };
+
+  const OPERATORS = {
+    className: 'operator',
+    begin: /[|><]|<<|>>>?|\\$/
+  };
+
+  const HEREDOC = {
+    className: 'string',
+    begin: /<<[-~]?'?(\w+)'?/,
+    end: /^\s*\1$/,
+    contains: [hljs.BACKSLASH_ESCAPE]
+  };
+
   const SH_LIKE_SHELLS = [
     "fish",
     "bash",
@@ -120,6 +133,9 @@ export default function(hljs) {
       QUOTE_STRING,
       ESCAPED_QUOTE,
       APOS_STRING,
+      HEREDOC,
+      OPERATORS,
+      SUBST,
       VAR
     ]
   };
